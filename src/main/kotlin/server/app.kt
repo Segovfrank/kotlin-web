@@ -29,6 +29,7 @@ fun main() {
             }
             get("random/{min}/{max}") {
                 val min = call.parameters["min"]?.toIntOrNull() ?: 0
+                val r = 0
                 val max = call.parameters["max"]?.toIntOrNull() ?: 10
                 val randomString = "${(min until max).shuffled().last()}"
                 call.respond(mapOf("value" to randomString))
