@@ -12,7 +12,8 @@ import io.ktor.server.engine.embeddedServer
 import io.ktor.server.netty.Netty
 
 fun main() {
-    embeddedServer(Netty,23567) {
+    val port = System.getenv("PORT")?.toInt() ?: 23567
+    embeddedServer(Netty,port) {
 
         install(ContentNegotiation) {
             gson {
@@ -29,7 +30,6 @@ fun main() {
             }
             get("random/{min}/{max}") {
                 val min = call.parameters["min"]?.toIntOrNull() ?: 0
-                val r = 0
                 val max = call.parameters["max"]?.toIntOrNull() ?: 10
                 val randomString = "${(min until max).shuffled().last()}"
                 call.respond(mapOf("value" to randomString))
